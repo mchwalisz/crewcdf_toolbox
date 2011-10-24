@@ -15,7 +15,7 @@ function [ p ] = crewcdf_load(fileName, varargin)
 
 % Mikolaj Chwalisz for CREW
 
-DevList = {'wispy','telos','imec'};
+DevList = {'wispy','telos','imec','crewcdf'};
 
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('fileName', @ischar);
@@ -31,6 +31,10 @@ if isempty(options.DevType)
             break;
         end
     end
+    [path, name, ext] =fileparts(fileName);
+    if strcmp(ext,'.mat')
+        options.DevType ='crewcdf';
+    end
 else
     varargin(1) = [];
 end
@@ -40,8 +44,13 @@ switch options.DevType
         p = crewcdf_wispy(fileName, varargin{:});
     case 'telos'
         p = crewcdf_telos(fileName, varargin{:});
+    case 'imec'
+        error('CrewCdf:DeviceNotDefined','No loading function for IMEC sensing agent');
+    case 'crewcdf'
+        pTemp = load(fileName);
+        % TODO: add some checks for data correctness
+        p = pTemp.p;
     otherwise
         error('CrewCdf:UnknownDevice','Unknown device type');
 end
-
 end
