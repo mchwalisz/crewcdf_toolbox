@@ -27,7 +27,11 @@ raw_data = importdata(fileName, ' ',4);
 % Get power
 Power = raw_data.data;
 Power(:,1:4) = [];
-
+% Remove NaN
+nans = isnan(Power);
+nanrows = sum(nans,2);
+Power = Power(nanrows==0,:);
+SampleTime = SampleTime(nanrows==0);
 p = struct( ...
     'Name'       , options.Name,...
     'Location'   , options.Location, ...
@@ -44,7 +48,11 @@ function [ CenterFreqVec, BW ] = crewcdf_wispy_getFrequency( frequencyStr )
 
 fc_txt = frequencyStr;
 fc_txt = fc_txt{1};
-fc_data = sscanf(fc_txt,'%dMHz-%dMHz @ %fKHz, %d samples');
+if fc_txt(1) == '#' %Provide backwards compatibility
+    fc_data = sscanf(fc_txt,'#    %dMHz-%dMHz @ %fKHz, %d samples');
+else
+    fc_data = sscanf(fc_txt,'%dMHz-%dMHz @ %fKHz, %d samples');
+end
 % Get freq
 CenterFreqVec = linspace(fc_data(1)*1e6, fc_data(2)*1e6, fc_data(4));
 % Get BW

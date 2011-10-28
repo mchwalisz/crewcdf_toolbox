@@ -16,6 +16,7 @@ iP.parse(fileName, varargin{:});
 options = iP.Results;
 if isempty(options.Name)
     [ path, options.Name] = fileparts(fileName);
+    options.Name = strrep(options.Name, '-', '');
 end
 % Import data from fileName (ignore 4 first lines)
 raw_data = importdata(fileName, ' ')';
