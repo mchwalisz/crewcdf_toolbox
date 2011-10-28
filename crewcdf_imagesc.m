@@ -2,8 +2,8 @@ function varargout = crewcdf_imagesc(p, varargin)
 %CREWCDF_IMAGESC Display spectrogram of common data format object
 
 iP = inputParser;   % Create an instance of the class.
-iP.addRequired('p', @(x)isequal(...
-    fieldnames(crewcdf_struct()),fieldnames(x)));
+iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
+    ==length(fieldnames(crewcdf_struct()))));
 iP.addParamValue('clims',[]);
 iP.addParamValue('tlims',[]);
 iP.addParamValue('FontSize', 10);
