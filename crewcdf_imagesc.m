@@ -7,6 +7,7 @@ iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
 iP.addParamValue('clims',[]);
 iP.addParamValue('tlims',[]);
 iP.addParamValue('FontSize', 10);
+iP.addParamValue('Title', '');
 iP.parse(p, varargin{:});
 options = iP.Results;
 if isempty(options.clims)
@@ -21,7 +22,12 @@ xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
 ylabel('Frequency (Hz)');
 colorbar;
 set(findall(h, 'Type','text'), 'FontSize', options.FontSize);
-title(p.Name,'FontSize',options.FontSize+1,'Interpreter','none');
+if isempty(options.Title)
+    title(p.Name,'FontSize',options.FontSize+1,'Interpreter','none');
+else
+    title(options.Title,'FontSize',options.FontSize+1,'Interpreter','none');
+end
+
 
 switch nargout
     case 1
