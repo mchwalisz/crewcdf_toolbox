@@ -25,13 +25,13 @@ iP.parse(fileName, varargin{:});
 options = iP.Results;
 
 if isempty(options.DevType)
+    [path, name, ext] =fileparts(fileName);
     for ii=1:length(DevList)
-        if ~isempty(strfind(lower(fileName),DevList{ii}))
+        if ~isempty(strfind(lower(name),DevList{ii}))
             options.DevType = DevList{ii};
             break;
         end
     end
-    [path, name, ext] =fileparts(fileName);
     if strcmp(ext,'.mat')
         options.DevType ='crewcdf';
     end
