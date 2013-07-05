@@ -1,4 +1,4 @@
-function [struct, freq, level] = readsatf(filename, varargin)
+function [struct, data , freq, level] = readsatf(filename, varargin)
 % READSATF - reads spectrum analyzer trace file.
 %            Rohde&Schwarz and Agilent (partially) supported.
 %
@@ -61,7 +61,8 @@ end
 % -------------------------------------------------------------------------
 % read data from file
 
-file = textread(filename,'%s','delimiter','\n','whitespace','');
+file = textread(filename,'%s','delimiter','\n','whitespace','', ...
+    'bufsize', 32760000);
 struct.exFileName = filename;
 struct.exFileCont = file;
 
@@ -154,12 +155,13 @@ end
 % Rohde&Schwarz .DAT file
 
 index = 0;
-% preallocating
-freq = zeros(1, 1000);
-level = zeros(1, 1000);
+
 for line = 1:length(file)
     % parse line
     item = strread(char(file(line)), '%s', 'delimiter', delimiter);
+    if isempty(item)
+        continue
+    end
     switch lower(char(item(1)))
         case 'type'
             struct.Type = char(item(2));
@@ -233,6 +235,7 @@ for line = 1:length(file)
             struct.yUnit = char(item(2));
         case 'values'
             struct.Values = str2double(char(item(2)));
+
         otherwise
             % dataline: "double; double;"
             % is item(1) a number?
@@ -245,18 +248,43 @@ for line = 1:length(file)
             if isempty(value2)
                 error('Not a number.\nLine %d: %s', line, char(file(line)));
             end
+            if strncmpi(char(item(1)),'section ',8)
+                level(index+1) = datenum(char(item(2)),'yyyy.mm.dd_HH.MM.SS:FFF');
+                continue
+            end
+            if isnan(value1)
+                continue
+            end
+            values = cellfun(@str2double,item);
+            if index == 0
+                    freq = zeros(size(values,1),1024);
+                    level = [level, zeros(1,1024)]; %#ok<AGROW>
+            end
             index = index + 1;
-            freq(index) = value1;
-            level(index) = value2;
+            if index >= size(freq,1)
+                    freq = padarray(freq, [0,1024],0,'post');
+                    level = padarray(level, [0,1024],0,'post');
+            end 
+            freq(:,index) = values;
     end
 end
 % cut freq and level
 if (index > 0)
-    freq = freq(1:index);
+    freq = freq(:,1:index);
     level = level(1:index);
     struct.exFreq = freq;
     struct.exLevel = level;
 end
+
+data.CenterFreq = linspace(struct.StartVal,struct.StopVal,struct.Values);
+data.SampleTime = ((struct.exLevel-datenum(1970,1,1))*86400) - ...
+    (datenum(datestr(struct.exLevel(1)))-datenum(1970,1,1)) * 86400;
+data.Tstart = datestr(struct.exLevel(1));
+data.Power = struct.exFreq';
+data.Name = filename;
+data.Location =[0, 0, 0];
+data.BW =  struct.RBWVal;
+
 return
 
 % -------------------------------------------------------------------------
