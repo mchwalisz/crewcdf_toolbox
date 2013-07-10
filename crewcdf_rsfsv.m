@@ -81,5 +81,9 @@ p.Power = [val; cell2mat(c(3:end))];
 
 % Calcultate frequencies
 p.CenterFreq = linspace(p.Meta.Start, p.Meta.Stop, size(p.Power,2));
+
+% Calculate BW
+
+p.BW = (p.Meta.Stop - p.Meta.Start)/ p.Meta.Values;
 fclose(fileId);
 end
