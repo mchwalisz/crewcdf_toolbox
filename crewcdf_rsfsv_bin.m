@@ -75,6 +75,8 @@ while ischar(fline)
         tStart_epoch = (datenum(p.Tstart)-datenum(1970,1,1)) * 86400;
         % Store only relative time in the data
         p.SampleTime = SampleTime - tStart_epoch;
+        % Calculate BW
+        p.BW = (p.Meta.Stop - p.Meta.Start)/ p.Meta.Values;
         break
     end
     fline = fgets(fileId);
