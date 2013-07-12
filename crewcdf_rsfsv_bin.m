@@ -58,7 +58,7 @@ while ischar(fline)
         c = textscan(fileId, format, p.Meta.Values, ...
             'delimiter', delimiter , ...
             'ReturnOnError', 0);
-        p.CenterFreq = c{1};
+        p.CenterFreq = c{1}';
         p.PowerSample = c{2}';
     end
     if strcmpi(name, 'binary_format')
