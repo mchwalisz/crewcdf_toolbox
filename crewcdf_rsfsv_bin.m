@@ -58,7 +58,7 @@ while ischar(fline)
         c = textscan(fileId, format, p.Meta.Values, ...
             'delimiter', delimiter , ...
             'ReturnOnError', 0);
-        p.CenterFreq = c{1};
+        p.CenterFreq = c{1}';
         p.PowerSample = c{2}';
     end
     if strcmpi(name, 'binary_format')
@@ -75,6 +75,8 @@ while ischar(fline)
         tStart_epoch = (datenum(p.Tstart)-datenum(1970,1,1)) * 86400;
         % Store only relative time in the data
         p.SampleTime = SampleTime - tStart_epoch;
+        % Calculate BW
+        p.BW = (p.Meta.Stop - p.Meta.Start)/ p.Meta.Values;
         break
     end
     fline = fgets(fileId);
