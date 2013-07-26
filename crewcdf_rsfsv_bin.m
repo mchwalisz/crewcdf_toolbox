@@ -15,7 +15,7 @@ iP.addParamValue('Location',[0, 0, 0]);
 iP.parse(fileName, varargin{:});
 options = iP.Results;
 if isempty(options.Name)
-    [ path, options.Name] = fileparts(fileName);
+    [ ~, options.Name] = fileparts(fileName);
     % options.Name = strrep(options.Name, '-', '');
 end
 
@@ -43,7 +43,7 @@ while ischar(fline)
     end
     item = strsplit(fline, delimiter);
     name = genvarname(regexprep(char(item(1)),'[^\w]','_'));
-    val = str2num(char(item(2)));
+    val = str2num(char(item(2))); %#ok<ST2NM>
     if isempty(val)
         p.Meta.(name) = char(item(2));
     else
@@ -54,12 +54,14 @@ while ischar(fline)
     end
     if strcmpi(name, 'values')
         % From the next line it is the sample data data
-        format = '%f %f';
+        format = '%s';
         c = textscan(fileId, format, p.Meta.Values, ...
-            'delimiter', delimiter , ...
-            'ReturnOnError', 0);
-        p.CenterFreq = c{1}';
-        p.PowerSample = c{2}';
+            'delimiter', '\n');
+        B = cellfun(@(x) regexp(x,delimiter,'split'),c{1},'uni',false);
+        Bout=cell2mat(cellfun(@(x) cellfun(@(y) str2double(y),x), ...
+            B,'uni',false));
+        p.CenterFreq = Bout(:,1)';
+        p.PowerSample = Bout(:,2)';
     end
     if strcmpi(name, 'binary_format')
         % There are binary data behind this poind we need to process them
