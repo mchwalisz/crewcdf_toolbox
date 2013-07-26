@@ -23,18 +23,29 @@ elseif freqcenter < 1e12
     xlabeltxt = 'Frequency (GHz)';
     xdenom = 1e9;
 end
-nbins = ceil(abs(min(p.Power(:))-max(p.Power(:))))*3;
-[histogram, dBmbins] = hist(p.Power,nbins);
 
-h = imagesc(p.CenterFreq/xdenom, dBmbins, histogram, ...
-    [0 max(quantile(histogram(histogram~=0),0.99))]);
+%% Actual work
+
+nbins = (abs(floor(min(p.Power(:)))-ceil(max(p.Power(:)))))*4+1;
+[histogram, bins] = hist(p.Power,nbins);
+zeroindex = all(histogram==0,2);
+histogram(zeroindex,:) =[];
+bins(zeroindex) = [];
+histlog = log10(histogram+1);
+
+h = imagesc(p.CenterFreq/xdenom, bins, histlog); %, ...
+%      [0 max(quantile(histlog(histlog~=-Inf),0.999))]);
 set(gca,'YDir','normal')
 cmap = jet(nbins);
 cmap(1,:) = 1;
 % cmap(2,:) = 0;
 colormap(cmap)
 
+
+%% Some labeling
+
 xlabel(xlabeltxt);
+xlim([p.CenterFreq(1)/xdenom, p.CenterFreq(end)/xdenom]);
 ylabel('Signal Power (dBm)');
 % colorbar;
 set(findall(h, 'Type','text'), 'FontSize', options.FontSize);
