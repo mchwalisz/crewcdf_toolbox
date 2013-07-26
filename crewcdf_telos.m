@@ -15,15 +15,18 @@ iP.addParamValue('Location',[0, 0, 0]);
 iP.parse(fileName, varargin{:});
 options = iP.Results;
 if isempty(options.Name)
-    [ path, options.Name] = fileparts(fileName);
+    [ ~, options.Name] = fileparts(fileName);
     options.Name = strrep(options.Name, '-', '');
 end
 % Import data from fileName (ignore 4 first lines)
 raw_data = importdata(fileName, ' ')';
 
 % Strip additional info
-[ CenterFreq, BW ] = crewcdf_telos_getFrequency( raw_data.textdata(3));
-[ Tstart, SampleTime ] = crewcdf_wispy_timeToRelative( raw_data.data(:,1)');
+findex = find(~cellfun(@isempty,strfind(raw_data.textdata,'Frequencies')));
+[ CenterFreq, BW ] = crewcdf_telos_getFrequency( ...
+    raw_data.textdata(findex)); %#ok<FNDSB>
+[ Tstart, SampleTime ] = crewcdf_wispy_timeToRelative( ...
+    raw_data.data(:,1)');
 % Get power
 Power = raw_data.data;
 Power(:,1) = [];
