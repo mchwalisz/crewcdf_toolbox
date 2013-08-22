@@ -15,7 +15,7 @@ function [ p ] = crewcdf_load(fileName, varargin)
 
 % Mikolaj Chwalisz for CREW
 
-DevList = {'wispy','telos','imec','crewcdf'};
+DevList = {'wispy','telos','imec','crewcdf', 'fsvsft', 'fsvbin'};
 
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('fileName', @ischar);
@@ -24,16 +24,25 @@ iP.addOptional('DevType','', ...
 iP.parse(fileName, varargin{:});
 options = iP.Results;
 
+% Detect device type
 if isempty(options.DevType)
-    [path, name, ext] =fileparts(fileName);
+    [~, name, ext] =fileparts(fileName);
+    % by filename
     for ii=1:length(DevList)
         if ~isempty(strfind(lower(name),DevList{ii}))
             options.DevType = DevList{ii};
             break;
         end
     end
+    % by extension
     if strcmp(ext,'.mat')
         options.DevType ='crewcdf';
+    end
+    if strcmp(ext,'.sft')
+        options.DevType = 'fsvsft';
+    end
+    if strcmp(ext,'.fsv')
+        options.DevType = 'fsvbin';
     end
 else
     varargin(1) = [];
@@ -50,6 +59,10 @@ switch options.DevType
         pTemp = load(fileName);
         % TODO: add some checks for data correctness
         p = pTemp.p;
+    case 'fsvsft'
+        p = crewcdf_rsfsv(fileName, varargin{:});
+    case 'fsvbin'
+        p = crewcdf_rsfsv_bin(fileName, varargin{:});
     otherwise
         error('CrewCdf:UnknownDevice','Unknown device type');
 end
