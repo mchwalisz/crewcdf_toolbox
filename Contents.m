@@ -1,7 +1,8 @@
 % CREWCDF_TOOLBOX
+% Version 0.2 27-Aug-2013
 %
 % Files
-%   creatCDF_USRP        - script to convert USRP sensing output to CREW common data format 
+%   creatCDF_USRP        - script to convert USRP sensing output to CREW common data format
 %   createCDF_Airmagnet  - script to create dummy measurements
 %   createCDF_imec       - script to convert IMEC sensing engine output to CREW common data format
 %   crewcdf_heatmap      - Display heat map spectrogram of common data format object
