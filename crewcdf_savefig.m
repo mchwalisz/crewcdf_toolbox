@@ -1,4 +1,22 @@
-function [] = savefig(f,name)
+function [] = crewcdf_savefig(f,name)
+%CREWCDF_SAVEFIG Save figure f to fig,pdf,png under 'name'
+%
+% crewcdf_savefig(f,name)
+%
+% This will try to save figure 'f' in the all three formats. If it fails it
+% will print error message but not fail execution.
+%
+% It will print the figure in full page horizontal A4 format to increase quality.
+%
+% Examples:
+% crewcdf_savefig(gcf,'nice_figure')
+%
+% See also:
+% CREWCDF_IMAGESC
+% CREWCDF_HEATMAP
+%
+% Mikolaj Chwalisz <chwaliszATtkn.tu-berlin.de>
+
 set(f,...
     'PaperType','A4',...
     'PaperOrientation','landscape', ...
