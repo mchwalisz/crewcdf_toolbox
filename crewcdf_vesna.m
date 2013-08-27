@@ -1,5 +1,5 @@
-function [ p ] = crewcdf_struct()
-%CREWCDF_STRUCT Returns the dummy common data format structure
+function [ p ] = crewcdf_vesna()
+%CREWCDF_VESNA Returns the dummy common data format structure
 %
 % p = common data format structure
 % p.Name        = Unique identifier of the sensing device
