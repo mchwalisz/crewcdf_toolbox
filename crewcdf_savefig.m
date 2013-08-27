@@ -1,4 +1,4 @@
-function [] = crewcdf_savefig(f,name)
+function [] = crewcdf_savefig(f, name, types)
 %CREWCDF_SAVEFIG Save figure f to fig,pdf,png under 'name'
 %
 % crewcdf_savefig(f,name)
@@ -16,6 +16,9 @@ function [] = crewcdf_savefig(f,name)
 % CREWCDF_HEATMAP
 %
 % Mikolaj Chwalisz <chwaliszATtkn.tu-berlin.de>
+if ~exist(types,'var')
+    types = {'fig','png','pdf'}
+end
 
 set(f,...
     'PaperType','A4',...
@@ -27,15 +30,19 @@ set(f,...
 set(f, 'renderer', 'painters');
 fax = get(gcf,'CurrentAxes');
 set(fax, 'LooseInset', get(fax,'TightInset'))
-try
-    print(f, [name '.pdf'], '-dpdf')
-catch ME
-    disp(ME)
+if any(strcmp(types,'pdf'))
+    try
+        print(f, [name '.pdf'], '-dpdf')
+    catch ME
+        disp(ME)
+    end
 end
-try
-    saveas(f, [name '.fig'],'fig')
-catch ME
-    disp(ME)
+if any(strcmp(types,'fig'))
+    try
+        saveas(f, [name '.fig'],'fig')
+    catch ME
+        disp(ME)
+    end
 end
 set(f, 'PaperOrientation','Portrait');
 % set(f, 'PaperPositionMode', 'manual');
@@ -44,5 +51,7 @@ set(f, 'PaperOrientation','Portrait');
 %     );
 % set(fax, 'Position', get(fax, 'OuterPosition') - ...
 %     get(fax, 'TightInset') * [-1 0 1 0; 0 -1 0 1; 0 0 1 0; 0 0 0 1]);
-print(f, [name '.png'], '-dpng')
+if any(strcmp(types,'png'))
+    print(f, [name '.png'], '-dpng')
+end
 end
