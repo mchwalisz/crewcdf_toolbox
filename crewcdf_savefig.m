@@ -16,8 +16,8 @@ function [] = crewcdf_savefig(f, name, types)
 % CREWCDF_HEATMAP
 %
 % Mikolaj Chwalisz <chwaliszATtkn.tu-berlin.de>
-if ~exist(types,'var')
-    types = {'fig','png','pdf'}
+if ~exist('types','var')
+    types = {'fig','png','pdf'};
 end
 
 set(f,...
