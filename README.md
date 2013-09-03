@@ -1,4 +1,6 @@
-# CREWCDF_TOOLBOX = CREW Common Data Format Matlab toolbox
+# CREWCDF Toolbox
+
+CREW Common Data Format Matlab toolbox
 
 ## Usage
 
