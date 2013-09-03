@@ -12,3 +12,9 @@ You can also add the `crewcdf_toolbox_load.m` to your `startup.m` file.
 
 - calibration tool
 - sanity checks for loading data
+
+
+## Acknowledgements
+
+The research leading to these results has received funding from the
+European Union's Seventh Framework Programme (FP7/2007-2013) under grant agreement n°`258301` ([CREW project](http://www.crew-project.eu/)).
