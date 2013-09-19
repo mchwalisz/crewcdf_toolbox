@@ -6,7 +6,7 @@ iP = inputParser;   % Create an instance of the class.
 iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
     ==length(fieldnames(crewcdf_struct()))));
 iP.addParamValue('FontSize', 10);
-iP.addParamValue('Title', '');
+iP.addOptional('Title', 0);
 iP.parse(p, varargin{:});
 options = iP.Results;
 freqcenter = p.CenterFreq(round(length(p.CenterFreq)/2));
@@ -49,7 +49,7 @@ xlim([p.CenterFreq(1)/xdenom, p.CenterFreq(end)/xdenom]);
 ylabel('Signal Power (dBm)');
 % colorbar;
 set(findall(h, 'Type','text'), 'FontSize', options.FontSize);
-if isempty(options.Title)
+if options.Title == 0
     title(p.Name,'FontSize',options.FontSize+1,'Interpreter','none');
 else
     title(options.Title,'FontSize',options.FontSize+1,'Interpreter','none');

@@ -4,10 +4,10 @@ function varargout = crewcdf_imagesc(p, varargin)
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
     ==length(fieldnames(crewcdf_struct()))));
-iP.addParamValue('clims',[]);
-iP.addParamValue('tlims',[]);
-iP.addParamValue('FontSize', 10);
-iP.addParamValue('Title', '');
+iP.addOptional('clims',[]);
+iP.addOptional('tlims',[]);
+iP.addOptional('FontSize', 10);
+iP.addOptional('Title', 0);
 iP.parse(p, varargin{:});
 options = iP.Results;
 freqcenter = p.CenterFreq(round(length(p.CenterFreq)/2));
@@ -36,7 +36,7 @@ xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
 ylabel(ylabeltxt);
 colorbar;
 set(findall(h, 'Type','text'), 'FontSize', options.FontSize);
-if isempty(options.Title)
+if options.Title == 0
     title(p.Name,'FontSize',options.FontSize+1,'Interpreter','none');
 else
     title(options.Title,'FontSize',options.FontSize+1,'Interpreter','none');
