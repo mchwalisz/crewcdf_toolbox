@@ -1,11 +1,11 @@
 % CREWCDF_TOOLBOX
-% Version 0.2 27-Aug-2013
+% Version 0.3 19-Sep-2013
 %
 % Files
-%   creatCDF_USRP        - script to convert USRP sensing output to CREW common data format
+%   creatCDF_USRP        - script to convert USRP sensing output to CREW common data format 
 %   createCDF_Airmagnet  - script to create dummy measurements
 %   createCDF_imec       - script to convert IMEC sensing engine output to CREW common data format
-%   crewcdf_heatmap      - Display heat map spectrogram of common data format object
+
 %   crewcdf_imagesc      - Display spectrogram of common data format object
 %   crewcdf_imec         - Loads imec measurement source file into common data format
 %   crewcdf_integratePSD - Calculates the power in certain frequency band
@@ -21,3 +21,4 @@
 %   crewcdf_vesna        - Returns the dummy common data format structure
 %   crewcdf_wispy        - Loads WiSpy measurement source file into common data format
 %   objdiff              - compares two objects & returns an object of the same type with just the different fields/values.
+%   crewcdf_plotpers     - Display presistence plot of common data format object
