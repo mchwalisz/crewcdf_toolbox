@@ -11,11 +11,10 @@ function [] = crewcdf_savefig(f, name, types)
 % Examples:
 % crewcdf_savefig(gcf,'nice_figure')
 %
-% See also:
-% CREWCDF_IMAGESC
-% CREWCDF_HEATMAP
+% See also: CREWCDF_IMAGESC, CREWCDF_PLOTPERS
 %
 % Mikolaj Chwalisz <chwaliszATtkn.tu-berlin.de>
+
 if ~exist('types','var')
     types = {'fig','png','pdf'};
 end
