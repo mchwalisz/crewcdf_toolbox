@@ -1,5 +1,20 @@
 function varargout = crewcdf_imagesc(p, varargin)
-%CREWCDF_IMAGESC Display spectrogram of common data format object
+% CREWCDF_IMAGESC Display spectrogram of common data format object
+%   CREWCDF_IMAGESC(P) Creates spectrogram of P.Power
+%
+%   CREWCDF_IMAGESC(P, ..., 'Title', TITLE) Adds own title to the figure;
+%   it overwrites the usual P.Name option.
+%
+%   CREWCDF_IMAGESC(P, ..., 'tlims', TLIMS) Limits spectrogram to the TLIMS
+%   range in time.
+%
+%   CREWCDF_IMAGESC(P, ..., 'clims', CLIMS) Limits spectrogram to the CLIMS
+%   range in frequency.
+%
+%   CREWCDF_IMAGESC(P, ..., 'FontSize', FS) Sets own font size FS for
+%   labels and titles
+%
+%   See also IMAGE, IMAGESC.
 
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
@@ -32,7 +47,8 @@ end
 if ~isempty(options.tlims)
     xlim(options.tlims);
 end
-xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
+% xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
+xlabel('Time (s)');
 ylabel(ylabeltxt);
 colorbar;
 set(findall(h, 'Type','text'), 'FontSize', options.FontSize);

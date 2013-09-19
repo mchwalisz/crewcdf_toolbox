@@ -1,6 +1,17 @@
-function varargout = crewcdf_heatmap(p, varargin)
-%CREWCDF_HEATMAP Display heat map spectrogram of common data format object
-
+function varargout = crewcdf_plotpers(p, varargin)
+%CREWCDF_PLOTPERS Display presistence plot of common data format object
+%   CREWCDF_PLOTPERS(P) Creates persistence plot of P.Power
+%
+%   CREWCDF_PLOTPERS(P, ..., 'Title', TITLE) Adds own title to the figure;
+%   it overwrites the usual P.Name option.
+%
+%   CREWCDF_PLOTPERS(P, ..., 'tlims', TLIMS) Limits spectrogram to the
+%   TLIMS range in time.
+%
+%   CREWCDF_PLOTPERS(P, ..., 'FontSize', FS) Sets own font size FS for
+%   labels and titles
+%
+%   See also CREWCDF_IMAGESC, HIST, IMAGESC.
 
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
