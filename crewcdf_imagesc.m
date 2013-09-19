@@ -30,7 +30,7 @@ else
     h = imagesc(p.SampleTime, p.CenterFreq/ydenom, p.Power', options.clims);
 end
 if ~isempty(options.tlims)
-    xlim(tlims);
+    xlim(options.tlims);
 end
 xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
 ylabel(ylabeltxt);

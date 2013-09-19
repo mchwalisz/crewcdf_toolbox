@@ -7,6 +7,7 @@ iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
     ==length(fieldnames(crewcdf_struct()))));
 iP.addParamValue('FontSize', 10);
 iP.addOptional('Title', 0);
+iP.addOptional('tlims', []);
 iP.parse(p, varargin{:});
 options = iP.Results;
 freqcenter = p.CenterFreq(round(length(p.CenterFreq)/2));
@@ -23,11 +24,16 @@ elseif freqcenter < 1e12
     xlabeltxt = 'Frequency (GHz)';
     xdenom = 1e9;
 end
-
+if ~isempty(options.tlims)
+    Power =  p.Power(p.SampleTime >= options.tlims(1) & ...
+        p.SampleTime <= options.tlims(2), : );
+else
+    Power = p.Power;
+end
 %% Actual work
 
-nbins = (abs(floor(min(p.Power(:)))-ceil(max(p.Power(:)))))*4+1;
-[histogram, bins] = hist(p.Power,nbins);
+nbins = (abs(floor(min(Power(:)))-ceil(max(Power(:)))))*4+1;
+[histogram, bins] = hist(Power,nbins);
 zeroindex = all(histogram==0,2);
 histogram(zeroindex,:) =[];
 bins(zeroindex) = [];
