@@ -10,12 +10,6 @@ To INSTALL the toolbox load it and save path by either `File>Save Path...` and t
 You can also add the `crewcdf_toolbox_load.m` to your `startup.m` file.
 
 
-## TODO
-
-- calibration tool
-- sanity checks for loading data
-
-
 ## Acknowledgements
 
 The research leading to these results has received funding from the
