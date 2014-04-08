@@ -9,11 +9,10 @@
 crewcdf_inst_filepath = [mfilename('fullpath') '.m'];
 [crewcdf_inst_pathstr, crewcdf_inst_name, crewcdf_inst_ext] = ...
     fileparts(crewcdf_inst_filepath);
-crewcdf_inst_toolbox_pathstr = genpath(crewcdf_inst_pathstr);
 
 % Add directories to path
-addpath(crewcdf_inst_toolbox_pathstr);
-%addpath(crewcdf_inst_pathstr);
+addpath(genpath(crewcdf_inst_pathstr));
+addpath(genpath([crewcdf_inst_pathstr filesep 'tools']));
 
 % Display and clean
 disp(['Added crewcdf_toolbox from ' crewcdf_inst_pathstr]);

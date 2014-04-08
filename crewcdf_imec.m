@@ -3,6 +3,10 @@ function [ p ] = crewcdf_imec(number, par_loc, par_power,time)
 %
 %   TODO: fill the correct content
 %   TODO: Add more help;
+%
+% script to convert IMEC sensing engine output to CREW common data format
+% Sofie Pollin for CREW in Sept 2011
+
 
 % default parameters
 

@@ -1,5 +1,6 @@
 % script to create dummy measurements
 % Sofie Pollin for CREW in Sept 2011
+% NOT FULLY FUNCTIONAL
 
 function createStructAirmagnet(number, par_tstart,par_loc,Filename);
 

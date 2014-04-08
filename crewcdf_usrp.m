@@ -1,5 +1,6 @@
 % script to convert USRP sensing output to CREW common data format 
 % Liu Wei Sep 2011
+% NOT FULLY FUNCTIONAL
 
 function creatStructUSRP(number, par_tstart, par_loc,Filename,device);
 
