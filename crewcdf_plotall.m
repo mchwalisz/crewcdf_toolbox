@@ -61,6 +61,7 @@ while ii<length(list)
             f = figure;
             subplot(2,1,1);
             crewcdf_plotpers(p);
+            freezeColors;
             subplot(2,1,2);
             crewcdf_imagesc(p, 'Title', '');
             crewcdf_savefig(f,[path filesep name '_' suffix],{'png'});
