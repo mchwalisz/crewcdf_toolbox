@@ -44,13 +44,13 @@ if any(strcmp(types,'fig'))
     end
 end
 set(f, 'PaperOrientation','Portrait');
-% set(f, 'PaperPositionMode', 'manual');
-% set(f, 'PaperPosition', [0 0 30 21]);
-%     'PaperPosition', [-2 -1 30 21+1] ...
-%     );
-% set(fax, 'Position', get(fax, 'OuterPosition') - ...
-%     get(fax, 'TightInset') * [-1 0 1 0; 0 -1 0 1; 0 0 1 0; 0 0 0 1]);
-set(gcf,'PaperUnits','centimeters','PaperSize',[29.7, 21],'PaperPosition',[0 0 29.7, 21])
+if (length(findall(gcf,'type','axes')) - length(findall(gcf,'tag','Colorbar'))) >= 2
+    % figure contains subplot, print as square
+    set(gcf,'PaperUnits','centimeters','PaperSize',[21,21],'PaperPosition',[0 0 21 21])
+else
+    % no subplot, print as horizontal A4
+    set(gcf,'PaperUnits','centimeters','PaperSize',[29.7, 21],'PaperPosition',[0 0 29.7, 21])
+end
 if any(strcmp(types,'png'))
     print(f, [name '.png'], '-r500', '-dpng')
 end
