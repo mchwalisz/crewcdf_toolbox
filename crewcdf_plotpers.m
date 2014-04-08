@@ -8,6 +8,9 @@ function varargout = crewcdf_plotpers(p, varargin)
 %   CREWCDF_PLOTPERS(P, ..., 'tlims', TLIMS) Limits spectrogram to the
 %   TLIMS range in time.
 %
+%   CREWCDF_PLOTPERS(P, ..., 'plims', PLIMS) Limits spectrogram to the
+%   PLIMS range in power.
+%
 %   CREWCDF_PLOTPERS(P, ..., 'FontSize', FS) Sets own font size FS for
 %   labels and titles.
 %
@@ -21,6 +24,7 @@ iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
 iP.addOptional('FontSize', 0);
 iP.addOptional('Title', 0);
 iP.addOptional('tlims', []);
+iP.addOptional('plims', []);
 iP.parse(p, varargin{:});
 options = iP.Results;
 freqcenter = p.CenterFreq(round(length(p.CenterFreq)/2));
@@ -50,16 +54,19 @@ nbins = (abs(floor(min(Power(:)))-ceil(max(Power(:)))))*4+1;
 zeroindex = all(histogram==0,2);
 histogram(zeroindex,:) =[];
 bins(zeroindex) = [];
+if ~isempty(options.plims)
+    histogram(bins <= options.plims(1),:) = [];
+    bins(bins <= options.plims(1)) = [];
+    histogram(bins >= options.plims(2),:) = [];
+    bins(bins >= options.plims(2)) = [];
+end
 histlog = log10(histogram+1);
 
-h = imagesc(p.CenterFreq/xdenom, bins, histlog); %, ...
-%      [0 max(quantile(histlog(histlog~=-Inf),0.999))]);
+h = imagesc(p.CenterFreq/xdenom, bins, histlog);
 set(gca,'YDir','normal')
 cmap = jet(nbins);
 cmap(1,:) = 1;
-% cmap(2,:) = 0;
 colormap(cmap)
-
 
 %% Some labeling
 
