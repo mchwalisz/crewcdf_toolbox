@@ -50,7 +50,8 @@ set(f, 'PaperOrientation','Portrait');
 %     );
 % set(fax, 'Position', get(fax, 'OuterPosition') - ...
 %     get(fax, 'TightInset') * [-1 0 1 0; 0 -1 0 1; 0 0 1 0; 0 0 0 1]);
+set(gcf,'PaperUnits','centimeters','PaperSize',[29.7, 21],'PaperPosition',[0 0 29.7, 21])
 if any(strcmp(types,'png'))
-    print(f, [name '.png'], '-dpng')
+    print(f, [name '.png'], '-r500', '-dpng')
 end
 end

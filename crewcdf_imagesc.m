@@ -12,16 +12,18 @@ function varargout = crewcdf_imagesc(p, varargin)
 %   range in frequency.
 %
 %   CREWCDF_IMAGESC(P, ..., 'FontSize', FS) Sets own font size FS for
-%   labels and titles
+%   labels and titles.
 %
 %   See also IMAGE, IMAGESC.
+%
+% Mikolaj Chwalisz <chwaliszATtkn.tu-berlin.de>
 
 iP = inputParser;   % Create an instance of the class.
 iP.addRequired('p', @(x)(sum(isfield(x, fieldnames(crewcdf_struct()))) ...
     ==length(fieldnames(crewcdf_struct()))));
 iP.addOptional('clims',[]);
 iP.addOptional('tlims',[]);
-iP.addOptional('FontSize', 10);
+iP.addOptional('FontSize', 0);
 iP.addOptional('Title', 0);
 iP.parse(p, varargin{:});
 options = iP.Results;
@@ -47,17 +49,24 @@ end
 if ~isempty(options.tlims)
     xlim(options.tlims);
 end
-% xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
-xlabel('Time (s)');
+xlabel(['      Time (s)' '  T_{start}=' p.Tstart]);
 ylabel(ylabeltxt);
-colorbar;
-set(findall(h, 'Type','text'), 'FontSize', options.FontSize);
+cbar = colorbar;
+xlabel(cbar,'Power [dBm]','HorizontalAlignment','Left');
 if options.Title == 0
-    title(p.Name,'FontSize',options.FontSize+1,'Interpreter','none');
+    title(p.Name,'Interpreter','none', 'fontWeight','bold');
 else
-    title(options.Title,'FontSize',options.FontSize+1,'Interpreter','none');
+    if options.Title ~= ''
+        title(options.Title,'Interpreter','none', 'fontWeight','bold');
+    end
 end
+cmap = jet();
+colormap(cmap)
 
+if options.FontSize ~= 0
+    set(gca,'FontSize', options.FontSize);
+    set(findall(gcf,'type','text'),'FontSize', options.FontSize);
+end
 
 switch nargout
     case 1
