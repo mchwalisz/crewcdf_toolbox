@@ -60,9 +60,10 @@ if ~isempty(options.plims)
     histogram(bins >= options.plims(2),:) = [];
     bins(bins >= options.plims(2)) = [];
 end
-histlog = log10(histogram+1);
-
-h = imagesc(p.CenterFreq/xdenom, bins, histlog);
+%histlog = log10(histogram+1);
+sample_duration = (p.SampleTime(end)-p.SampleTime(1))/length(p.SampleTime);
+%histogram = histogram * sample_duration;
+h = imagesc(p.CenterFreq/xdenom, bins, log10(histogram+1));
 set(gca,'YDir','normal')
 cmap = jet(nbins);
 cmap(1,:) = 1;
@@ -74,12 +75,18 @@ xlabel(xlabeltxt);
 xlim([p.CenterFreq(1)/xdenom, p.CenterFreq(end)/xdenom]);
 ylabel('Signal Power (dBm)');
 cbar = colorbar;
-ticks = round(linspace(0, ...
-    max(max(histogram))*(p.SampleTime(end)-p.SampleTime(1)) ...
-    /length(p.SampleTime), 8)*100)/100;
+freezeColors;
 
-set(cbar,'YTickLabel', ticks);
+yticks = get(cbar,'YLim');
+set(cbar,'YLim',[0,yticks(2)]);
+yticks = linspace(0,yticks(2),8);
+set(cbar,'YTick', yticks);
+set(cbar,'YTickMode', 'manual');
+yticks = round((10.^yticks-1)* sample_duration *100)/100;
+set(cbar,'YTickLabel', yticks);
+cbar = cbfreeze(cbar);
 xlabel(cbar,'\Sigma Time [s]','HorizontalAlignment','Left');
+
 
 if options.Title == 0
     title(p.Name,'Interpreter','none', 'fontWeight','bold');

@@ -13,6 +13,7 @@ crewcdf_inst_filepath = [mfilename('fullpath') '.m'];
 % Add directories to path
 addpath(genpath(crewcdf_inst_pathstr));
 addpath(genpath([crewcdf_inst_pathstr filesep 'tools']));
+addpath(genpath([crewcdf_inst_pathstr filesep 'tools' filesep 'cmapbar']));
 
 % Display and clean
 disp(['Added crewcdf_toolbox from ' crewcdf_inst_pathstr]);
