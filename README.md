@@ -2,12 +2,16 @@
 
 CREW Common Data Format Matlab toolbox
 
-## Usage
+## Installation
 
-To LOAD the toolbox run `crewcdf_toolbox_load.m`
+To LOAD the toolbox run `crewcdf_toolbox_load.m` like this:
+
+    run(['<crewcdf_toolbox_folder>' filesep 'crewcdf_toolbox_load.m']);
 
 To INSTALL the toolbox load it and save path by either `File>Save Path...` and than save or by savepath command.
-You can also add the `crewcdf_toolbox_load.m` to your `startup.m` file.
+You can also add the above line to your `startup.m` file.
+
+## Usage
 
 It is possible to make a summary plots of all data files in the given directory and it's subdirectories:
 
