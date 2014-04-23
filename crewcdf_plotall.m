@@ -32,6 +32,7 @@ while ii<length(list)
         continue
     end
     if list(ii).isdir
+        % If directory, add to search path and go further
         % disp(['Folder: ' list(ii).name])
         list2 = dir([list(ii).dirname filesep list(ii).name]);
         if isempty(list2)
@@ -43,7 +44,12 @@ while ii<length(list)
         list = [list; list2]; %#ok<AGROW>
         continue
     end
+    if ~ isscalar(list(ii).bytes)
+        % Abort if not real file (e.g. broken symlink)
+        continue
+    end
     if sizelim > 0 && list(ii).bytes >= sizelim
+        % Abort if larger than size limit
         continue
     end
     [path, name, ext] = fileparts([list(ii).dirname filesep list(ii).name]);
