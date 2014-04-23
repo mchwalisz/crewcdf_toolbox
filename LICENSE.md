@@ -42,6 +42,8 @@ This product includes software covered by the following copyright notices. All t
 
 ## COLORMAP and COLORBAR utilities
 
+[Source](http://www.mathworks.com/matlabcentral/fileexchange/24371-colormap-and-colorbar-utilities--feb-2014-)
+
 ```
 Copyright (c) 2009-2014, Carlos Adrian Vargas Aguilera
 All rights reserved.
@@ -71,12 +73,18 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ## freezeColors
 
+[Source](http://www.mathworks.com/matlabcentral/fileexchange/7943-freezecolors---unfreezecolors)
+
 ```
+Code covered by the BSD License
 John Iversen (iversen@nsi.edu) 3/23/05
 ```
 
 ## objdiff
 
+[Source](http://www.mathworks.com/matlabcentral/fileexchange/14395-objdiff-generic-object-comparator)
+
 ```
+Code covered by the BSD License
 Yair M. Altman: altmany(at)gmail.com
 ```
