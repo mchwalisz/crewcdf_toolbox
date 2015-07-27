@@ -22,6 +22,19 @@ For more information we refer to particular help functions.
 
 ![image](html/jammer_wispy_summary.png)
 
+
+### Known Issues
+
+#### Linux font problems in plots are too small.
+
+Install xfonts packages with the following command. Then logout and login from your session to get the font list updated.
+
+    sudo apt-get install xfonts-100dpi xfonts-75dpi
+
+#### Use Matlab >2013a
+
+The toolbox uses read functions that only appeared in 2013a version. However, it is possible to get the missing functions from file exchange.
+
 ## Acknowledgements
 
 The research leading to these results has received funding from the
