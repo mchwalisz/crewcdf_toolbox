@@ -60,7 +60,8 @@ else
         title(options.Title,'Interpreter','none', 'fontWeight','bold');
     end
 end
-cmap = jet();
+% cmap = jet();
+cmap = viridis_cm();
 colormap(cmap)
 
 if options.FontSize ~= 0

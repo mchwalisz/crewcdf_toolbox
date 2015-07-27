@@ -65,7 +65,8 @@ sample_duration = (p.SampleTime(end)-p.SampleTime(1))/length(p.SampleTime);
 %histogram = histogram * sample_duration;
 h = imagesc(p.CenterFreq/xdenom, bins, log10(histogram+1));
 set(gca,'YDir','normal')
-cmap = jet(nbins);
+% cmap = jet(nbins);
+cmap = viridis_cm();
 cmap(1,:) = 1;
 colormap(cmap)
 
